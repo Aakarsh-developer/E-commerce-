@@ -1,3 +1,4 @@
+
 "use client"
 import React from "react";
 import { assets, BagIcon, BoxIcon, CartIcon, HomeIcon} from "@/assets/assets";
@@ -86,3 +87,5 @@ const Navbar = () => {
   );
 };
 
+
+export default Navbar;
