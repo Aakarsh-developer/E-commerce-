@@ -1,3 +1,4 @@
+
 'use client'
 import { productsDummyData, userDummyData } from "@/assets/assets";
 import { useUser } from "@clerk/nextjs";
@@ -100,4 +101,5 @@ export const AppContextProvider = (props) => {
             {props.children}
         </AppContext.Provider>
     )
+
 }
