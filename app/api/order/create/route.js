@@ -1,6 +1,7 @@
 import { inngest } from "@/config/inngest";
 import Product from "@/models/product";
-import { getAuth, User } from "@clerk/nextjs/server";
+import User from "@/models/User";
+import {getAuth} from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 
@@ -15,14 +16,14 @@ export async function POST(request) {
         }
 
         // calculate amount using items
-        const amount= await items.reduce(async(accessedDynamicData,item)=>{
+        const amount= await items.reduce(async(accessedDynamicDate,item)=>{
             const product = await Product.findById(item.product);
-            return acc + product.offerPrice *item.quantity;
+            return await accessedDynamicDate + product.offerPrice *item.quantity;
         },0)
 
         await inngest.send({
             name:'order/created',
-            date:{
+            data:{
                 userId,
                 address,
                 items,
@@ -33,7 +34,7 @@ export async function POST(request) {
 
         // clear user cart
         const user = await User.findById(userId)
-        user.cartItmes={}
+        user.cartItems={}
         await user.save()
 
         return NextResponse.json({success:true, message:'Order Placed'})
